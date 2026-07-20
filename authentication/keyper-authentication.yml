@@ -1,0 +1,29 @@
+generated: '2026-07-19'
+method: searched
+source: https://github.com/keyper/keyper-access-api/blob/master/apiary.apib
+docs: https://developers.keyper.com
+summary:
+  types: [apiKey]
+  api_key_in: [header]
+  oauth2_flows: []
+schemes:
+- name: keyperAuth
+  type: apiKey
+  in: header
+  header: Authorization
+  description: >-
+    The Authorization header carries either an application secret or a user
+    authentication token. Two documented forms:
+      - "Authorization: APPSECRET <secret>"   (string app secret)
+      - "Authorization: AUTHTOKEN <guid>"     (per-user authentication token)
+  forms:
+  - kind: app-secret
+    prefix: APPSECRET
+    example_shape: "APPSECRET <string>"
+  - kind: auth-token
+    prefix: AUTHTOKEN
+    example_shape: "AUTHTOKEN <guid>"
+  sources: [openapi/keyper-access-openapi.yml]
+notes:
+- API keys / app secrets are obtained by registering a business account at app.keyper.io/business.
+- Invalid or expired credentials return HTTP 401 with the keyper error envelope.
