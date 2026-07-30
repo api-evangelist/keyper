@@ -1,0 +1,27 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/keyper-access-openapi.yml
+standards:
+- id: oauth2
+  conforms: false
+  evidence: No oauth2 securityScheme; auth is a custom Authorization header (app secret / auth token).
+- id: oidc
+  conforms: false
+- id: apikey-auth
+  conforms: true
+  evidence: apiKey securityScheme in header (Authorization).
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: Errors use a custom envelope (error_number / error_message / errors), not application/problem+json.
+- id: pagination
+  conforms: true
+  evidence: Incremental-id pagination via lastID / count / last_available_id on GET /v1/permissions.
+- id: idempotency
+  conforms: false
+  evidence: No idempotency-key header documented.
+- id: iso8601-datetimes
+  conforms: true
+  evidence: Timestamps use ISO 8601 local time with timezone offset.
+- id: uri-path-versioning
+  conforms: true
+  evidence: Version segment /v1/ in all paths.

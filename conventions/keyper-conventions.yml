@@ -1,0 +1,45 @@
+generated: '2026-07-19'
+method: searched
+source: https://github.com/keyper/keyper-access-api/blob/master/apiary.apib
+authentication:
+  style: api-key-header
+  header: Authorization
+  forms: [APPSECRET <secret>, AUTHTOKEN <guid>]
+  ref: authentication/keyper-authentication.yml
+versioning:
+  scheme: uri-path
+  current: v1
+  example: /v1/permissions
+idempotency:
+  supported: false
+  note: No idempotency key is documented for the Access API.
+pagination:
+  style: incremental-id
+  request_params:
+    lastID: Last ID of permissions fetched by the ACS; poll forward from the last retrieved entry.
+    count: Page size, default 50, max 500.
+  response_fields:
+    last_available_id: Highest available permission ID; compare against lastID to know when caught up.
+  note: Cursor-style forward polling keyed on lastID; reset only to intentionally re-request data.
+metadata:
+  field: metadata
+  description: Optional ticket data (seat, row, entry, block, category, reduction) on permissions.
+  suppress_param: suppressMetadata
+datetimes:
+  format: iso-8601
+  detail: Local time with timezone offset, e.g. 2016-09-25T09:21:55+02:00.
+localization:
+  header: Accept-Language
+  default: en
+  example: de, en-gb;q=0.8, en;q=0.7
+client_version:
+  header: X-App-Version
+  description: Optional app version; useful with an AUTHTOKEN to record the version on the user's device.
+content_type:
+  request: application/json
+  note: Content-Type is mandatory for calls that send JSON in the body.
+error_envelope:
+  ref: errors/keyper-error-codes.yml
+  fields: [error_number, error_message, errors, field_errors]
+rate_limit_signal:
+  documented: false

@@ -1,0 +1,30 @@
+generated: '2026-07-19'
+method: searched
+source: https://github.com/keyper
+notes: >-
+  keyper publishes first-party mobile SDKs on its GitHub org (github.com/keyper)
+  and via the developer portal (developers.keyper.com). No public npm / PyPI /
+  Maven / NuGet packages were found; the iOS SDK is distributed through a private
+  CocoaPods spec repo. registry:github marks source distribution, not a package index.
+packages:
+- language: swift-objc
+  registry: cocoapods
+  name: keyper-ios-sdk
+  url: https://github.com/keyper/keyper-ios-sdk
+  sample: https://github.com/keyper/keyper-ios-sdk-sample
+  spec_repo: https://github.com/keyper/keyper-ios-sdk-pods-repo
+  official: true
+  description: keyper iOS SDK for delivering and updating e-tickets in iOS apps.
+- language: java
+  registry: github
+  name: keyper-android-sdk
+  url: https://github.com/keyper/keyper-android-sdk-sample
+  sample: https://github.com/keyper/keyper-android-sdk-sample
+  official: true
+  description: keyper Android SDK (sample app) for delivering and updating e-tickets in Android apps.
+- language: javascript
+  registry: github
+  name: keyper-web-components
+  url: https://github.com/keyper/web-components
+  official: true
+  description: Documentation and demo for keyper web components (seatmaps and checkout widgets).

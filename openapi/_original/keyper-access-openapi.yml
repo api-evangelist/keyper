@@ -1,0 +1,307 @@
+openapi: 3.0.3
+info:
+  title: keyper Access API
+  version: v1
+  description: >-
+    The keyper Access API lets an Access Control System (ACS) exchange access /
+    entry data with keyper. Send entry transactions for keys (e.g. ticket
+    barcodes) and their permissions (e.g. events), and fetch the permission
+    whitelist / blacklist (Grant / Block) that an ACS should enforce at the gate.
+    Derived faithfully from keyper's published API Blueprint
+    (github.com/keyper/keyper-access-api, apiary.apib).
+  contact:
+    name: keyper Developers
+    url: https://developers.keyper.com
+    email: developers@keyper.com
+  x-apievangelist-generated: '2026-07-19'
+  x-apievangelist-method: derived
+  x-apievangelist-source: https://github.com/keyper/keyper-access-api/blob/master/apiary.apib
+servers:
+  - url: https://api.keyper.io/access
+    description: Production
+  - url: https://sandbox.api.keyper.io/access
+    description: Sandbox
+tags:
+  - name: Transactions
+    description: Send access / entry transactions to keyper.
+  - name: Permissions
+    description: Retrieve the permission whitelist / blacklist for an Access Control System.
+paths:
+  /v1/transactions:
+    put:
+      operationId: sendTransactions
+      summary: Send Transactions
+      description: >-
+        Send access / entry transactions to keyper. Transactions referencing
+        keys or permissions unknown to keyper are ignored without warning;
+        transactions in conflict with the stored key state are ignored with a
+        warning returned in the response.
+      tags: [Transactions]
+      parameters:
+        - $ref: '#/components/parameters/AcceptLanguage'
+        - $ref: '#/components/parameters/XAppVersion'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionRequestModel'
+      responses:
+        '200':
+          description: Transactions accepted; any per-transaction warnings are returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionResponseModel'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+      security:
+        - keyperAuth: []
+  /v1/permissions:
+    get:
+      operationId: getPermissions
+      summary: Get permissions (Whitelist / Blacklist)
+      description: >-
+        Get permission entries an Access Control System should use to set ticket
+        permissions (Grant / Block). Poll incrementally using lastID set to the
+        last successfully retrieved permission entry.
+      tags: [Permissions]
+      parameters:
+        - name: lastID
+          in: query
+          required: true
+          description: Last ID of permissions fetched by the ACS.
+          schema:
+            type: integer
+            format: int64
+            example: 15001
+        - name: count
+          in: query
+          required: false
+          description: Count of permissions to be returned (max. 500).
+          schema:
+            type: integer
+            format: int64
+            default: 50
+            maximum: 500
+        - name: suppressMetadata
+          in: query
+          required: false
+          description: Set whether metadata is included.
+          schema:
+            type: boolean
+            default: false
+        - name: permissionID
+          in: query
+          required: false
+          description: Filter for a specific permission id.
+          schema:
+            type: string
+        - $ref: '#/components/parameters/AcceptLanguage'
+        - $ref: '#/components/parameters/XAppVersion'
+      responses:
+        '200':
+          description: The permission whitelist / blacklist page.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PermissionResponseModel'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+      security:
+        - keyperAuth: []
+components:
+  securitySchemes:
+    keyperAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: >-
+        Authorization header carrying either an app secret ("APPSECRET <secret>")
+        or a user authentication token ("AUTHTOKEN <guid>").
+  parameters:
+    AcceptLanguage:
+      name: Accept-Language
+      in: header
+      required: false
+      description: Optional language preference list; defaults to English.
+      schema:
+        type: string
+        example: de, en-gb;q=0.8, en;q=0.7
+    XAppVersion:
+      name: X-App-Version
+      in: header
+      required: false
+      description: Optional version of the app the user is using.
+      schema:
+        type: string
+        example: '1.0'
+  responses:
+    Unauthorized:
+      description: The app_secret / auth_token is invalid or expired.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Conflict:
+      description: A resource conflict occurred while processing.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    UnprocessableEntity:
+      description: Error while processing data; detailed error information is returned.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  schemas:
+    TransactionRequestModel:
+      type: object
+      required: [transactions]
+      properties:
+        transactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Transaction'
+    Transaction:
+      type: object
+      required: [key_id, permission_id, permission_state]
+      properties:
+        key_id:
+          type: string
+          description: ID of the key (e.g. ticket barcode).
+        permission_id:
+          type: string
+          description: ID of the permission (e.g. event id) the transaction is for.
+        permission_state:
+          $ref: '#/components/schemas/PermissionStateEnum'
+        timestamp:
+          type: string
+          description: Timestamp of the transaction; defaults to current time.
+        gate:
+          $ref: '#/components/schemas/Gate'
+    Gate:
+      type: object
+      required: [id, name]
+      properties:
+        id:
+          type: string
+          description: ID of the gate.
+        name:
+          type: string
+          description: Name of the gate.
+    PermissionStateEnum:
+      type: string
+      enum: [Used]
+      description: The state of the key's permission.
+    TransactionResponseModel:
+      type: object
+      properties:
+        warnings:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransactionWarning'
+    TransactionWarning:
+      type: object
+      properties:
+        key_id:
+          type: string
+        permission_id:
+          type: string
+        message:
+          type: string
+    PermissionResponseModel:
+      type: object
+      required: [last_available_id]
+      properties:
+        permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Permission'
+        last_available_id:
+          type: number
+          description: Highest available permission ID; used for pagination.
+    Permission:
+      type: object
+      required: [id, key_id, permission_id, action]
+      properties:
+        id:
+          type: number
+          description: Consecutive number per operator.
+        key_id:
+          type: string
+          description: The ID of the key (e.g. ticket barcode).
+        permission_id:
+          type: string
+          description: The id of the permission (e.g. event id).
+        action:
+          $ref: '#/components/schemas/PermissionActionEnum'
+        action_message:
+          $ref: '#/components/schemas/ActionMessage'
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+    PermissionActionEnum:
+      type: string
+      enum: [Grant, Block]
+      description: Action the access control system should perform.
+    ActionMessage:
+      type: object
+      required: [message]
+      properties:
+        message:
+          type: string
+        detail:
+          type: string
+    Metadata:
+      type: object
+      description: Additional ticket data about the permission.
+      properties:
+        seat:
+          type: string
+        row:
+          type: string
+        entry:
+          type: string
+        block:
+          type: string
+        category:
+          type: string
+        reduction:
+          type: string
+    ErrorResponse:
+      type: object
+      description: keyper error envelope.
+      properties:
+        error_number:
+          type: string
+          description: Specific error number raised (single-item calls).
+        error_message:
+          type: string
+          description: Error message (single item) or info message (list calls).
+        errors:
+          type: array
+          description: Per-list-item errors raised after input validation.
+          items:
+            $ref: '#/components/schemas/ErrorListItem'
+        field_errors:
+          type: array
+          description: Errors rendered while parsing input.
+          items:
+            type: object
+    ErrorListItem:
+      type: object
+      properties:
+        error_index:
+          type: string
+          description: Index of the list item that caused the error.
+        error_number:
+          type: string
+        error_message:
+          type: string

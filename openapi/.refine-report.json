@@ -1,0 +1,16 @@
+{
+  "provider": "keyper",
+  "sources": [
+    "keyper-permissions-api-openapi.yml",
+    "keyper-transactions-api-openapi.yml"
+  ],
+  "outputs": [
+    "keyper-permissions-api-openapi.yml",
+    "keyper-transactions-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

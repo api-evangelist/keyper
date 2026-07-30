@@ -1,0 +1,34 @@
+# keyper
+
+> keyper is an Austrian connected-ticketing and digital-access platform. Its developer surface lets ticketing systems, resellers and access control systems (ACS) deliver e-tickets and exchange access data. The keyper Access API sends entry transactions for keys (ticket barcodes) and their permissions (events), and returns the Grant / Block permission whitelist an ACS enforces at the gate. keyper is backed by Speedinvest.
+
+## APIs
+
+- [keyper Access API](https://developers.keyper.com): Send access / entry transactions and fetch the Grant / Block permission whitelist. Base URL https://api.keyper.io/access (sandbox https://sandbox.api.keyper.io/access).
+
+## Specs
+
+- [OpenAPI (derived)](openapi/keyper-access-openapi.yml): keyper Access API as OpenAPI 3.0, derived from the published API Blueprint.
+- [API Blueprint (verbatim)](openapi/keyper-access.apib): keyper Access API source blueprint.
+
+## Operations
+
+- sendTransactions — PUT /v1/transactions — send access / entry transactions.
+- getPermissions — GET /v1/permissions — get the permission whitelist / blacklist.
+
+## Artifacts
+
+- [Authentication](authentication/keyper-authentication.yml): Authorization header (APPSECRET or AUTHTOKEN).
+- [Error codes](errors/keyper-error-codes.yml): custom error envelope (error_number / error_message / errors).
+- [Conventions](conventions/keyper-conventions.yml): pagination, versioning, datetimes, localization.
+- [Data model](data-model/keyper-data-model.yml): Transaction, Permission, Key, Gate, Metadata.
+- [Packages / SDKs](packages/keyper-packages.yml): iOS SDK, Android SDK, web components.
+- [Components](components/keyper-components.yml): seatmap and checkout web widgets.
+- [Agent skills](skills/_index.yml): packaged flows for the Access API.
+
+## Docs
+
+- [Developer portal](https://developers.keyper.com)
+- [Developer support](https://support.keyper.com/developers/)
+- [GitHub organization](https://github.com/keyper)
+- [News](https://www.keyper.com/news/)

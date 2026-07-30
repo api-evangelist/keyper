@@ -1,0 +1,345 @@
+FORMAT: 1A
+HOST: https://sandbox.api.keyper.io/access
+
+# keyper Access API 
+If you need a great online-tool to view and edit JSONs easily, try <http://www.jsoneditoronline.org>.
+
+## General Header Information
+
+The request header has to contain either an appsecret (string) or an authentication token (guid).
+* Authorization: APPSECRET 123456
+* Authorization: AUTHTOKEN 65221b4b-1594-4b9f-8a6a-1b30b4ef60ea
+
+The language information (string list) is optional. If the header contains no information about the language the default language is english.
+* Accept-Language: de, en-gb;q=0.8, en;q=0.7
+
+The app-version information (string) is optional. It indicates the version of the app the user is using. It is only useful in combination with an authentication token header to store this information at the users device in the database.
+* X-App-Version: 1.0
+
+The content type information is mandatory for calls that send JSON within the body.
+* Content-Type: application/json
+
+## General Information
+
+### Datetimes
+
+Times are expressed in local time, together with a time zone offset in hours and minutes. A time zone offset of "+hh:mm" indicates that the date/time uses a local time zone which is "hh" hours and "mm" minutes ahead of UTC. A time zone offset of "-hh:mm" indicates that the date/time uses a local time zone which is "hh" hours and "mm" minutes behind UTC.
+
+    Complete date plus hours, minutes and seconds
+      YYYY-MM-DDThh:mm:ssTZD (eg 1997-07-16T19:20:30+01:00)
+      
+Note that the "T" appears literally in the string, to indicate the beginning of the time element, as specified in ISO 8601.
+
+     where:
+     
+     YYYY = four-digit year
+     MM   = two-digit month (01=January, etc.)
+     DD   = two-digit day of month (01 through 31)
+     hh   = two digits of hour (00 through 23) (am/pm NOT allowed)
+     mm   = two digits of minute (00 through 59)
+     ss   = two digits of second (00 through 59)
+     TZD  = time zone designator (+hh:mm or -hh:mm)
+
+Example:
+
+     `2016-09-25T09:21:55+02:00`
+    
+    
+## General Error Response Codes
+
+* If the sent `app_secret` respectively `auth_token` is invalid or expired, as response an HTTP status of __401 Unauthorized__ and contain a JSON response body having `error_code` and `error_message` properties are returned.
+
+* If some request conflicts while processing certain ressources, an error having the HTTP status code __409 Conflict__ is returned.
+
+* If some error accured while processing data, an HTTP status code being __422 Unprocessable Entity__ and a JSON body containing detailed error information are returned.
+
+### General Error Response
+
+The error response contains one of two types of error descriptions:
+* Usually if an error occurs the response list `errors` is empty and all needed data is stored within `error_number` and `error_message`
+* If a list is passed (e.g. on create offer) each list item could have an error so the response list `errors` will contain all needed data. No data is returned for `error_number` and `error_message`
+
+Basic layout of an error message:
+
+|name|datatype|description|
+|---|---|---|
+|error_number|string|Specific error number that is raised.|
+|error_message|string|Contains an error message if there was only one item for the call that raised the error. Otherwise this is only an info message. For detailled information see errors (list).|
+|errors|list|A list of errors that might be raised after parsing input. See `error list item`.|
+|field_errors|list|A list of errors that will be rendered when parsing input. See `error field item`.|
+
+**error list item**
+
+This kind of error will be rendered when input is valid and an error is raised after input validation. Error list item layout:
+
+|name|datatype|description|
+|---|---|---|
+|error_index|string|Index of list item that caused an error.|
+|error_number|string|Specific error number that is raised by list element `error_index`.|
+|error_message|string|Specific error message that is raised by list element `error_index`.|
+
+
+# Group Transactions
+
+## Transactions [/v1/transactions]
+
+### Send Transactions [PUT]
+
+Use this API call to send access / entry transactions to keyper.
+
+Please be aware of the following behaviours:
+ - Transactions with keys that are not available at keyper will be ignored without warning.
+ - Transactions with permissions that are not available at keyper will be ignored without warning.
+ - Transactions that are in conflict with the state of the key at keyper will be ignored, however will return a warning.
+
+
++ Request
+
+    + Headers
+    
+            Authorization: AUTHTOKEN 65221b4b-1594-4b9f-8a6a-1b30b4ef60ea
+            Accept-Language: de, en-gb;q=0.8, en;q=0.7
+            Content-Type: application/json
+            X-App-Version: 1.0
+            
+    + Attributes (TransactionRequestModel)
+
+    + Body
+
+            {
+                "transactions": [
+                    {
+                        "key_id": "bc_1234567890",
+                        "permission_id": "ev_1234",
+                        "permission_state": "Used",
+                        "timestamp": "2020-01-01T00:01:01+02:00",
+                        "gate": {
+                            "id": "g_01",
+                            "name": "Southwest VIP 1"
+                        }
+                    },
+                    {
+                        "key_id": "bc_1234567891",
+                        "permission_id": "ev_1234",
+                        "permission_state": "Used",
+                        "timestamp": "2020-01-01T00:01:02+02:00"
+                    },
+                    {
+                        "key_id": "bc_1234567892",
+                        "permission_id": "ev_1235",
+                        "permission_state": "Used",
+                        "timestamp": "2020-02-01T00:01:01+02:00"
+                    }
+                ]
+            }
+            
++ Response 200
+
+            {
+                "warnings": [
+                    {
+                        "key_id": "bc_1234567890",
+                        "permission_id": "ev_1234",
+                        "message": "Ticket already set to used."
+                    },
+                    {
+                        "key_id": "bc_1234567890",
+                        "permission_id": "ev_1234",
+                        "message": "Cancelled ticket cannot be set to used."
+                    },
+                    {
+                        "key_id": "bc_1234567890",
+                        "permission_id": "ev_1234",
+                        "message": "Ticket with barcode error cannot be set to used."
+                    },
+                    {
+                        "key_id": "bc_1234567890",
+                        "permission_id": "ev_1234",
+                        "message": "Sold subtickets cannot be set to used."
+                    }
+                ]
+            }
+
+
++ Response 422 (application/json)
+
+            {
+                "error_message": "Error list available - see Errors",
+                "errors": [{
+                    "error_index": 0,
+                    "error_number": 123456,
+                    "error_message": "---"
+                }]
+            }
+            
+
+# Group Permissions
+            
+## Permissions [/v1/permissions?lastID={lastID}&count={count}&suppressMetadata={suppressMetadata}&permissionID={permissionID}]
+
+### Get permissions (Whitelist / Blacklist) [GET]
+
+Get entries that should be used by an Access Control System to set ticket permissions (Block / Grant). 
+Please be aware of the `lastID` property in the request. By default always set it to the last successfully retreived permission entry. Only set it to zero or a lower value if you really want to request the data again.
+
++ Parameters
+
+    + lastID: 15001 (long) 
+        Last ID of permissions fetched by ACS
+
+    + count (long, optional)
+        Count of permissions to be returned (max. 500)
+        + Default: `50`
+
+    + suppressMetadata (boolean, optional)
+        Set whether you need the metadata or not
+        + Default: `false`
+
+    + permissionID (string, optional)
+        Set a permission id you want to filter for
+  
+
++ Request
+
+    + Headers
+    
+            Authorization: AUTHTOKEN 65221b4b-1594-4b9f-8a6a-1b30b4ef60ea
+            Accept-Language: de, en-gb;q=0.8, en;q=0.7
+            X-App-Version: 1.0
+
++ Response 200 (application/json)
+
+    + Attributes (PermissionResponseModel)
+
+    + Body
+
+            {
+               "permissions": [
+                  {
+                     "id":11,
+                     "key_id":"bc_1234567890",
+                     "permission_id":"ev_1234",
+                     "action":"Grant",
+                     "action_message":{
+                        "message":"Enjoy the game - sponsored by SponsorXYZ",
+                        "detail":"Ticket transferred by Mobile Ticketing Service"
+                     },
+                     "metadata":{
+                        "seat":"102",
+                        "row":"7",
+                        "entry":"1202",
+                        "block":"32179",
+                        "category":"1",
+                        "reduction":"11"
+                     }
+                  },
+                  {
+                     "id":12,
+                     "key_id":"bc_1234567889",
+                     "permission_id":"ev_1234",
+                     "action":"Block",
+                     "action_message":{
+                        "message":"Ticket transferred by Mobile Ticketing Service"
+                     },
+                     "metadata":{
+                        "seat":"102",
+                        "row":"7",
+                        "entry":"1202",
+                        "block":"32179",
+                        "category":"1",
+                        "reduction":"11"
+                     }
+                  },
+                  {
+                     "id":13,
+                     "key_id":"bc_1234567891",
+                     "permission_id":"ev_1234",
+                     "action":"Grant",
+                     "action_message":null,
+                     "metadata":null
+                  },
+                  {
+                     "id":14,
+                     "key_id":"bc_1234567888",
+                     "permission_id":"ev_1234",
+                     "action":"Block",
+                     "action_message":null,
+                     "metadata":null
+                  }
+               ],
+               "last_available_id":17
+            }
+
++ Response 422 (application/json)
+
+    + Body
+
+            {
+                "error_message": "Error list available - see Errors",
+                "errors": [{
+                    "error_index": 0,
+                    "error_number": 123456,
+                    "error_message": "---"
+                }]
+            }
+
+
+# Data Structures
+
+## TransactionRequestModel (object)
++ transactions (array[Transaction], required)
+
+## Transaction (object)
++ key_id (string, required)
+    ID of the key (e.g. ticket- barcode, ...)
++ permission_id (string, required)
+    ID of the permission (e.g. event-id) you want to send a transaction for
++ permission_state (PermissionStateEnum, required) 
+    The state of the key´s permission
++ timestamp (string, optional)
+    Timestamp of the transaction, defaults to current time
++ gate (Gate, optional) 
+    The gate where the access/entry happended
+
+## Gate (object)
++ id (string, required) ID of the gate
++ name (string, required) Name of the gate
+
+## PermissionStateEnum (enum)
++ Used
+    Key has been used (e.g. entered the stadium)
+
+## PermissionResponseModel (object)
++ permissions (array[Permission], fixed-type)
++ last_available_id (number, required)
+    Highest ID that is available for getting permissions. Used for pagination.
+
+## Permission (object)
++ id (number, required)
+    Consecutive number per operator
++ key_id (string, required)
+    The ID of the key (e.g. ticket- barcode, ...)
++ permission_id (string, required)
+    The id of the permission (e.g. event-id)
++ action (PermissionActionEnum, required)
+    Action that should be performed by access control system
++ action_message (ActionMessage, optional)
+    Message that should be displayed at the reader if supported by ACS
++ metadata (Metadata, optional)
+    Additional information about the permission (ticket data)
+
+## PermissionActionEnum (enum)
++ Grant
++ Block
+
+## ActionMessage (object)
++ message (string, required)
++ detail (string, optional)
+
+## Metadata (object)
++ seat (string, optional)
++ row (string, optional)
++ entry (string, optional)
++ block (string, optional)
++ category (string, optional)
++ reduction (string, optional)

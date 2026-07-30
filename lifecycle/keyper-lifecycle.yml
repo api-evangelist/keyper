@@ -1,0 +1,22 @@
+generated: '2026-07-19'
+method: searched
+source: https://developers.keyper.com
+versioning:
+  scheme: uri-path
+  current: v1
+  docs: https://developers.keyper.com
+deprecation:
+  policy_url: null
+  sunset_header: false
+  note: No published deprecation / Sunset (RFC 8594) policy was found.
+sla:
+  url: null
+status_page:
+  url: https://status.keyper.com
+  provider: statuspage.io
+  state: inactive
+  note: >-
+    status.keyper.com resolves to keyper.statuspage.io/inactive (HTTP 200 but the
+    hosted status page is currently disabled). No StatusPage rating pointer is
+    wired because the page is not active.
+deprecated_operations: []

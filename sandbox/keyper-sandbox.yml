@@ -1,0 +1,24 @@
+generated: '2026-07-19'
+method: searched
+source: https://developers.keyper.com
+description: >-
+  keyper provides a separate sandbox environment for the Access API and a
+  sandbox business account for obtaining test credentials. No public magic test
+  values (test keys / barcodes) are published; test data is provisioned per
+  sandbox account.
+environments:
+- name: sandbox
+  api_base: https://sandbox.api.keyper.io/access
+  signup: https://sandbox.app.keyper.io/business
+  status: reachable-auth-gated
+- name: production
+  api_base: https://api.keyper.io/access
+  signup: https://app.keyper.io/business
+  status: reachable-auth-gated
+credentials:
+  model: app-secret-or-auth-token
+  note: >-
+    A sandbox business account issues an APPSECRET; per-user AUTHTOKENs are
+    issued at runtime. The Authorization examples in the API Blueprint
+    (APPSECRET 123456, AUTHTOKEN 65221b4b-...) are documentation placeholders,
+    not working test credentials.

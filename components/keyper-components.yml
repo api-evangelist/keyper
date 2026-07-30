@@ -1,0 +1,17 @@
+generated: '2026-07-19'
+method: searched
+source: https://developers.keyper.com
+repo: https://github.com/keyper/web-components
+description: >-
+  keyper ships embeddable web components for integrating ticketing surfaces into
+  a website, distinct from the server-side / mobile SDKs.
+families:
+- name: Web Widgets
+  description: Web-based integration surfaces for ticketing.
+  components:
+  - name: Seatmap
+    description: Interactive seat-selection map widget.
+  - name: Checkout
+    description: Web checkout widget for ticket purchase.
+  docs: https://developers.keyper.com
+  repo: https://github.com/keyper/web-components

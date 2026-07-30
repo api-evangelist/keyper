@@ -1,0 +1,60 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/keyper-access-openapi.yml
+entities:
+- name: Transaction
+  description: An access / entry event for a key against a permission.
+  fields: [key_id, permission_id, permission_state, timestamp, gate]
+- name: Permission
+  description: A Grant / Block instruction an access control system enforces for a key.
+  id: id
+  fields: [id, key_id, permission_id, action, action_message, metadata]
+- name: Key
+  description: >-
+    Logical entity referenced by key_id (e.g. a ticket barcode). Not returned as
+    a standalone resource; appears as a foreign key on transactions and permissions.
+  id_prefix_example: bc_
+- name: PermissionSubject
+  description: >-
+    Logical entity referenced by permission_id (e.g. an event). Appears as a
+    foreign key on transactions and permissions.
+  id_prefix_example: ev_
+- name: Gate
+  description: The gate where an access / entry happened.
+  fields: [id, name]
+  id_prefix_example: g_
+- name: ActionMessage
+  description: Message displayed at the reader when supported by the ACS.
+  fields: [message, detail]
+- name: Metadata
+  description: Additional ticket data attached to a permission.
+  fields: [seat, row, entry, block, category, reduction]
+relationships:
+- from: Transaction
+  to: Key
+  type: belongs_to
+  via: key_id
+- from: Transaction
+  to: PermissionSubject
+  type: belongs_to
+  via: permission_id
+- from: Transaction
+  to: Gate
+  type: has_one
+  via: gate
+- from: Permission
+  to: Key
+  type: belongs_to
+  via: key_id
+- from: Permission
+  to: PermissionSubject
+  type: belongs_to
+  via: permission_id
+- from: Permission
+  to: ActionMessage
+  type: has_one
+  via: action_message
+- from: Permission
+  to: Metadata
+  type: has_one
+  via: metadata

@@ -1,0 +1,41 @@
+generated: '2026-07-19'
+method: searched
+source: https://github.com/keyper/keyper-access-api/blob/master/apiary.apib
+format: custom
+description: >-
+  keyper does not use RFC 9457 problem+json. Errors use a custom JSON envelope
+  with error_number / error_message plus per-item errors[] and field_errors[].
+envelope:
+  fields:
+  - name: error_number
+    type: string
+    description: Specific error number raised (single-item calls).
+  - name: error_message
+    type: string
+    description: Error message for a single item, or an info message for list calls.
+  - name: errors
+    type: list
+    description: >-
+      Per-list-item errors raised AFTER input validation. Each item carries
+      error_index, error_number, error_message.
+  - name: field_errors
+    type: list
+    description: Errors rendered WHILE parsing input (field-level validation).
+list_item:
+  fields:
+  - {name: error_index, type: string, description: Index of the list item that caused the error.}
+  - {name: error_number, type: string, description: Specific error number for that list element.}
+  - {name: error_message, type: string, description: Specific error message for that list element.}
+status_codes:
+- status: 401
+  meaning: Unauthorized
+  cause: The app_secret / auth_token is invalid or expired.
+- status: 409
+  meaning: Conflict
+  cause: A resource conflict occurred while processing certain resources.
+- status: 422
+  meaning: Unprocessable Entity
+  cause: An error occurred while processing data; a JSON body with detailed error info is returned.
+source_operations:
+- openapi/keyper-access-openapi.yml#sendTransactions
+- openapi/keyper-access-openapi.yml#getPermissions

@@ -1,0 +1,12 @@
+generated: '2026-07-19'
+method: generated
+source: openapi/keyper-access-openapi.yml
+skills:
+- file: keyper-sync-permissions.md
+  name: Sync the keyper permission whitelist to an access control system
+  api: openapi/keyper-access-openapi.yml
+  operations: [getPermissions]
+- file: keyper-send-transactions.md
+  name: Report gate entry transactions to keyper
+  api: openapi/keyper-access-openapi.yml
+  operations: [sendTransactions]

@@ -1,0 +1,17 @@
+generated: '2026-07-19'
+method: derived
+status: candidate
+source: openapi/keyper-access-openapi.yml
+note: >-
+  No official hosted / remote keyper MCP server was found. This is a candidate
+  tool list derived one-to-one from the keyper Access API operations.
+server:
+  name: keyper-access
+  transport: http
+tools:
+- name: send_transactions
+  description: Send access / entry transactions to keyper for keys and their permissions.
+  source_operation: openapi/keyper-access-openapi.yml#sendTransactions
+- name: get_permissions
+  description: Fetch the Grant / Block permission whitelist for an access control system.
+  source_operation: openapi/keyper-access-openapi.yml#getPermissions
