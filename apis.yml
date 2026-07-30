@@ -1,22 +1,142 @@
 aid: keyper
 name: Keyper
-description: Keyper is a company surfaced as a portfolio company of speedinvest and added to the API Evangelist
-  network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+description: >-
+  keyper is an Austrian technology company providing connected ticketing and
+  digital access solutions. Its developer platform lets ticketing systems,
+  resellers and access control systems (ACS) deliver e-tickets and exchange
+  access data through the keyper Access API, Connect Provider / Reseller APIs,
+  Ticket Delivery API, native Android and iOS SDKs, and embeddable web
+  components (seatmaps and checkout). The Access API sends entry transactions
+  for keys (ticket barcodes) and their permissions (events), and returns the
+  Grant / Block permission whitelist an access control system enforces at the
+  gate. keyper serves sports, arts and culture organisations across Austria and
+  Central Europe and is backed by Speedinvest.
 url: https://raw.githubusercontent.com/api-evangelist/keyper/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - speedinvest
-x-tier: stub
+x-tier: profiled
 x-tier-reason: portfolio-lead
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://www.keyper.com/wp-content/uploads/keyper-logo.png
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-19'
 tags:
 - Company
-apis: []
+- Ticketing
+- Access Control
+- Events
+- Developer Platform
+- SDK
+- Sports
+- Arts and Culture
+- Austria
+apis:
+- aid: keyper:keyper-permissions-api
+  name: Keyper Permissions API
+  description: Retrieve the permission whitelist / blacklist for an Access Control System.
+  humanURL: https://developers.keyper.com
+  baseURL: https://api.keyper.io/access
+  tags:
+  - Permissions
+  properties:
+  - type: OpenAPI
+    url: openapi/keyper-permissions-api-openapi.yml
+  - type: APIBlueprint
+    url: openapi/keyper-access.apib
+  - type: Authentication
+    url: authentication/keyper-authentication.yml
+  - type: ErrorCatalog
+    url: errors/keyper-error-codes.yml
+  - type: Conventions
+    url: conventions/keyper-conventions.yml
+  - type: DataModel
+    url: data-model/keyper-data-model.yml
+  - type: Conformance
+    url: conformance/keyper-conformance.yml
+- aid: keyper:keyper-transactions-api
+  name: Keyper Transactions API
+  description: Send access / entry transactions to keyper.
+  humanURL: https://developers.keyper.com
+  baseURL: https://api.keyper.io/access
+  tags:
+  - Transactions
+  properties:
+  - type: OpenAPI
+    url: openapi/keyper-transactions-api-openapi.yml
+  - type: APIBlueprint
+    url: openapi/keyper-access.apib
+  - type: Authentication
+    url: authentication/keyper-authentication.yml
+  - type: ErrorCatalog
+    url: errors/keyper-error-codes.yml
+  - type: Conventions
+    url: conventions/keyper-conventions.yml
+  - type: DataModel
+    url: data-model/keyper-data-model.yml
+  - type: Conformance
+    url: conformance/keyper-conformance.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+common:
+- type: DeveloperPortal
+  url: https://developers.keyper.com
+- type: Documentation
+  url: https://developers.keyper.com
+- type: APIReference
+  url: https://developers.keyper.com
+- type: GettingStarted
+  url: https://developers.keyper.com
+- type: Support
+  url: https://support.keyper.com/developers/
+- type: Blog
+  url: https://www.keyper.com/news/
+- type: GitHubOrganization
+  url: https://github.com/keyper
+- type: Login
+  url: https://app.keyper.io/business/
+- type: TermsOfService
+  url: https://www.keyper.com/terms-and-conditions/
+- type: PrivacyPolicy
+  url: https://www.keyper.com/privacy-policy/
+- type: Website
+  url: https://www.keyper.com
+- type: Packages
+  url: packages/keyper-packages.yml
+- type: SDKs
+  url: packages/keyper-packages.yml
+- type: Components
+  url: components/keyper-components.yml
+- type: Sandbox
+  url: sandbox/keyper-sandbox.yml
+- type: Lifecycle
+  url: lifecycle/keyper-lifecycle.yml
+- type: LLMsTxt
+  url: llms/keyper-llms.txt
+- type: WellKnown
+  url: well-known/keyper-well-known.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: DomainSecurity
+  url: security/keyper-domain-security.yml
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence
