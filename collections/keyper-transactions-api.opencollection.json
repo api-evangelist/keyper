@@ -1,0 +1,49 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "keyper Access Permissions Transactions API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Transactions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Send Transactions",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.keyper.io/access/v1/transactions",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              },
+              {
+                "name": "X-App-Version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Send access / entry transactions to keyper. Transactions referencing keys or permissions unknown to keyper are ignored without warning; transactions in conflict with the stored key state are ignored with a warning returned in the response."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

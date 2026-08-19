@@ -1,0 +1,71 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "keyper Access Permissions API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Permissions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get permissions (Whitelist / Blacklist)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.keyper.io/access/v1/permissions",
+            "headers": [
+              {
+                "name": "Accept-Language",
+                "value": ""
+              },
+              {
+                "name": "X-App-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "lastID",
+                "value": "",
+                "type": "query",
+                "description": "Last ID of permissions fetched by the ACS."
+              },
+              {
+                "name": "count",
+                "value": "",
+                "type": "query",
+                "description": "Count of permissions to be returned (max. 500)."
+              },
+              {
+                "name": "suppressMetadata",
+                "value": "",
+                "type": "query",
+                "description": "Set whether metadata is included."
+              },
+              {
+                "name": "permissionID",
+                "value": "",
+                "type": "query",
+                "description": "Filter for a specific permission id."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "Authorization",
+              "value": "{{Authorization}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get permission entries an Access Control System should use to set ticket permissions (Grant / Block). Poll incrementally using lastID set to the last successfully retrieved permission entry."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

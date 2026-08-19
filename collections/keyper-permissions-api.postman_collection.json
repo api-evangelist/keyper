@@ -1,0 +1,340 @@
+{
+  "item": [
+    {
+      "id": "eda3ef5f-1427-45b1-96fb-b1771183dc05",
+      "name": "Permissions",
+      "description": {
+        "content": "Retrieve the permission whitelist / blacklist for an Access Control System.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "07c3de18-6dba-404c-84ff-7022f3950a6d",
+          "name": "Get permissions (Whitelist / Blacklist)",
+          "request": {
+            "name": "Get permissions (Whitelist / Blacklist)",
+            "description": {
+              "content": "Get permission entries an Access Control System should use to set ticket permissions (Grant / Block). Poll incrementally using lastID set to the last successfully retrieved permission entry.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "permissions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "lastID",
+                  "value": "<long>",
+                  "description": "(Required) Last ID of permissions fetched by the ACS."
+                },
+                {
+                  "disabled": false,
+                  "key": "count",
+                  "value": "50",
+                  "description": "Count of permissions to be returned (max. 500)."
+                },
+                {
+                  "disabled": false,
+                  "key": "suppressMetadata",
+                  "value": "false",
+                  "description": "Set whether metadata is included."
+                },
+                {
+                  "disabled": false,
+                  "key": "permissionID",
+                  "value": "<string>",
+                  "description": "Filter for a specific permission id."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Optional language preference list; defaults to English.",
+                "key": "Accept-Language",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "Optional version of the app the user is using.",
+                "key": "X-App-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "ee78cc0a-2fe3-4579-8f18-ca2019c22fe5",
+              "name": "The permission whitelist / blacklist page.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "permissions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "lastID",
+                      "value": "15001"
+                    },
+                    {
+                      "key": "count",
+                      "value": "50"
+                    },
+                    {
+                      "key": "suppressMetadata",
+                      "value": "false"
+                    },
+                    {
+                      "key": "permissionID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Optional language preference list; defaults to English.",
+                    "key": "Accept-Language",
+                    "value": "de, en-gb;q=0.8, en;q=0.7"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Optional version of the app the user is using.",
+                    "key": "X-App-Version",
+                    "value": "1.0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"last_available_id\": 3161.8549734872636,\n  \"permissions\": [\n    {\n      \"id\": 6313.898957219552,\n      \"key_id\": \"string\",\n      \"permission_id\": \"string\",\n      \"action\": \"Grant\",\n      \"action_message\": {\n        \"message\": \"string\",\n        \"detail\": \"string\"\n      },\n      \"metadata\": {\n        \"seat\": \"string\",\n        \"row\": \"string\",\n        \"entry\": \"string\",\n        \"block\": \"string\",\n        \"category\": \"string\",\n        \"reduction\": \"string\"\n      }\n    },\n    {\n      \"id\": 8038.967703728216,\n      \"key_id\": \"string\",\n      \"permission_id\": \"string\",\n      \"action\": \"Grant\",\n      \"action_message\": {\n        \"message\": \"string\",\n        \"detail\": \"string\"\n      },\n      \"metadata\": {\n        \"seat\": \"string\",\n        \"row\": \"string\",\n        \"entry\": \"string\",\n        \"block\": \"string\",\n        \"category\": \"string\",\n        \"reduction\": \"string\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "82fcd28e-132d-4f53-acfe-d08412b52e79",
+              "name": "The app_secret / auth_token is invalid or expired.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "permissions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "lastID",
+                      "value": "15001"
+                    },
+                    {
+                      "key": "count",
+                      "value": "50"
+                    },
+                    {
+                      "key": "suppressMetadata",
+                      "value": "false"
+                    },
+                    {
+                      "key": "permissionID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Optional language preference list; defaults to English.",
+                    "key": "Accept-Language",
+                    "value": "de, en-gb;q=0.8, en;q=0.7"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Optional version of the app the user is using.",
+                    "key": "X-App-Version",
+                    "value": "1.0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_number\": \"string\",\n  \"error_message\": \"string\",\n  \"errors\": [\n    {\n      \"error_index\": \"string\",\n      \"error_number\": \"string\",\n      \"error_message\": \"string\"\n    },\n    {\n      \"error_index\": \"string\",\n      \"error_number\": \"string\",\n      \"error_message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a1ad37ee-0ca3-4ef1-9976-a333c9784a1a",
+              "name": "Error while processing data; detailed error information is returned.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "permissions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "lastID",
+                      "value": "15001"
+                    },
+                    {
+                      "key": "count",
+                      "value": "50"
+                    },
+                    {
+                      "key": "suppressMetadata",
+                      "value": "false"
+                    },
+                    {
+                      "key": "permissionID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Optional language preference list; defaults to English.",
+                    "key": "Accept-Language",
+                    "value": "de, en-gb;q=0.8, en;q=0.7"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Optional version of the app the user is using.",
+                    "key": "X-App-Version",
+                    "value": "1.0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_number\": \"string\",\n  \"error_message\": \"string\",\n  \"errors\": [\n    {\n      \"error_index\": \"string\",\n      \"error_number\": \"string\",\n      \"error_message\": \"string\"\n    },\n    {\n      \"error_index\": \"string\",\n      \"error_number\": \"string\",\n      \"error_message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.keyper.io/access",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "76eb587b-3abb-48f5-b9b1-6f6df98fa09d",
+    "name": "keyper Access Permissions API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The keyper Access API lets an Access Control System (ACS) exchange access / entry data with keyper. Send entry transactions for keys (e.g. ticket barcodes) and their permissions (e.g. events), and fetch the permission whitelist / blacklist (Grant / Block) that an ACS should enforce at the gate. Derived faithfully from keyper's published API Blueprint (github.com/keyper/keyper-access-api, apiary.apib).\n\nContact Support:\n Name: keyper Developers\n Email: developers@keyper.com",
+      "type": "text/plain"
+    }
+  }
+}

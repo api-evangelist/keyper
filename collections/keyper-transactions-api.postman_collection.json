@@ -1,0 +1,365 @@
+{
+  "item": [
+    {
+      "id": "14e1dc88-64e8-4f91-b56d-37f8038f4eeb",
+      "name": "Transactions",
+      "description": {
+        "content": "Send access / entry transactions to keyper.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b4954465-48e5-43e2-b4c6-12d3a3dae2a5",
+          "name": "Send Transactions",
+          "request": {
+            "name": "Send Transactions",
+            "description": {
+              "content": "Send access / entry transactions to keyper. Transactions referencing keys or permissions unknown to keyper are ignored without warning; transactions in conflict with the stored key state are ignored with a warning returned in the response.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "transactions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Optional language preference list; defaults to English.",
+                "key": "Accept-Language",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "Optional version of the app the user is using.",
+                "key": "X-App-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "Authorization"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"transactions\": [\n    {\n      \"key_id\": \"<string>\",\n      \"permission_id\": \"<string>\",\n      \"permission_state\": \"<string>\",\n      \"timestamp\": \"<string>\",\n      \"gate\": {\n        \"id\": \"<string>\",\n        \"name\": \"<string>\"\n      }\n    },\n    {\n      \"key_id\": \"<string>\",\n      \"permission_id\": \"<string>\",\n      \"permission_state\": \"<string>\",\n      \"timestamp\": \"<string>\",\n      \"gate\": {\n        \"id\": \"<string>\",\n        \"name\": \"<string>\"\n      }\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a7d1f83b-2a35-4e17-8d2c-77de727abf01",
+              "name": "Transactions accepted; any per-transaction warnings are returned.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "transactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Optional language preference list; defaults to English.",
+                    "key": "Accept-Language",
+                    "value": "de, en-gb;q=0.8, en;q=0.7"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Optional version of the app the user is using.",
+                    "key": "X-App-Version",
+                    "value": "1.0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"transactions\": [\n    {\n      \"key_id\": \"<string>\",\n      \"permission_id\": \"<string>\",\n      \"permission_state\": \"<string>\",\n      \"timestamp\": \"<string>\",\n      \"gate\": {\n        \"id\": \"<string>\",\n        \"name\": \"<string>\"\n      }\n    },\n    {\n      \"key_id\": \"<string>\",\n      \"permission_id\": \"<string>\",\n      \"permission_state\": \"<string>\",\n      \"timestamp\": \"<string>\",\n      \"gate\": {\n        \"id\": \"<string>\",\n        \"name\": \"<string>\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"warnings\": [\n    {\n      \"key_id\": \"string\",\n      \"permission_id\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"key_id\": \"string\",\n      \"permission_id\": \"string\",\n      \"message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ec34a09d-15cd-4c6a-b27b-530125db6f4e",
+              "name": "The app_secret / auth_token is invalid or expired.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "transactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Optional language preference list; defaults to English.",
+                    "key": "Accept-Language",
+                    "value": "de, en-gb;q=0.8, en;q=0.7"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Optional version of the app the user is using.",
+                    "key": "X-App-Version",
+                    "value": "1.0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"transactions\": [\n    {\n      \"key_id\": \"<string>\",\n      \"permission_id\": \"<string>\",\n      \"permission_state\": \"<string>\",\n      \"timestamp\": \"<string>\",\n      \"gate\": {\n        \"id\": \"<string>\",\n        \"name\": \"<string>\"\n      }\n    },\n    {\n      \"key_id\": \"<string>\",\n      \"permission_id\": \"<string>\",\n      \"permission_state\": \"<string>\",\n      \"timestamp\": \"<string>\",\n      \"gate\": {\n        \"id\": \"<string>\",\n        \"name\": \"<string>\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_number\": \"string\",\n  \"error_message\": \"string\",\n  \"errors\": [\n    {\n      \"error_index\": \"string\",\n      \"error_number\": \"string\",\n      \"error_message\": \"string\"\n    },\n    {\n      \"error_index\": \"string\",\n      \"error_number\": \"string\",\n      \"error_message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "88c67f3f-58c7-439b-834e-fde9e2a71b71",
+              "name": "A resource conflict occurred while processing.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "transactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Optional language preference list; defaults to English.",
+                    "key": "Accept-Language",
+                    "value": "de, en-gb;q=0.8, en;q=0.7"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Optional version of the app the user is using.",
+                    "key": "X-App-Version",
+                    "value": "1.0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"transactions\": [\n    {\n      \"key_id\": \"<string>\",\n      \"permission_id\": \"<string>\",\n      \"permission_state\": \"<string>\",\n      \"timestamp\": \"<string>\",\n      \"gate\": {\n        \"id\": \"<string>\",\n        \"name\": \"<string>\"\n      }\n    },\n    {\n      \"key_id\": \"<string>\",\n      \"permission_id\": \"<string>\",\n      \"permission_state\": \"<string>\",\n      \"timestamp\": \"<string>\",\n      \"gate\": {\n        \"id\": \"<string>\",\n        \"name\": \"<string>\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_number\": \"string\",\n  \"error_message\": \"string\",\n  \"errors\": [\n    {\n      \"error_index\": \"string\",\n      \"error_number\": \"string\",\n      \"error_message\": \"string\"\n    },\n    {\n      \"error_index\": \"string\",\n      \"error_number\": \"string\",\n      \"error_message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b46f8027-7826-44b0-bf06-248622e2d30c",
+              "name": "Error while processing data; detailed error information is returned.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "transactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Optional language preference list; defaults to English.",
+                    "key": "Accept-Language",
+                    "value": "de, en-gb;q=0.8, en;q=0.7"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Optional version of the app the user is using.",
+                    "key": "X-App-Version",
+                    "value": "1.0"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"transactions\": [\n    {\n      \"key_id\": \"<string>\",\n      \"permission_id\": \"<string>\",\n      \"permission_state\": \"<string>\",\n      \"timestamp\": \"<string>\",\n      \"gate\": {\n        \"id\": \"<string>\",\n        \"name\": \"<string>\"\n      }\n    },\n    {\n      \"key_id\": \"<string>\",\n      \"permission_id\": \"<string>\",\n      \"permission_state\": \"<string>\",\n      \"timestamp\": \"<string>\",\n      \"gate\": {\n        \"id\": \"<string>\",\n        \"name\": \"<string>\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_number\": \"string\",\n  \"error_message\": \"string\",\n  \"errors\": [\n    {\n      \"error_index\": \"string\",\n      \"error_number\": \"string\",\n      \"error_message\": \"string\"\n    },\n    {\n      \"error_index\": \"string\",\n      \"error_number\": \"string\",\n      \"error_message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.keyper.io/access",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "4bbb5e4c-3a99-42d3-82c3-f07f09a63e77",
+    "name": "keyper Access Permissions Transactions API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The keyper Access API lets an Access Control System (ACS) exchange access / entry data with keyper. Send entry transactions for keys (e.g. ticket barcodes) and their permissions (e.g. events), and fetch the permission whitelist / blacklist (Grant / Block) that an ACS should enforce at the gate. Derived faithfully from keyper's published API Blueprint (github.com/keyper/keyper-access-api, apiary.apib).\n\nContact Support:\n Name: keyper Developers\n Email: developers@keyper.com",
+      "type": "text/plain"
+    }
+  }
+}
