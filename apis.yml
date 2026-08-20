@@ -38,6 +38,16 @@ tags:
 - Company
 - Ticketing
 - Access Control
+- Event
+- Developer Platform
+- SDK
+- Sports
+- Arts and Culture
+- Austria
+tags_raw:
+- Company
+- Ticketing
+- Access Control
 - Events
 - Developer Platform
 - SDK
@@ -73,6 +83,8 @@ apis:
   humanURL: https://developers.keyper.com
   baseURL: https://api.keyper.io/access
   tags:
+  - Transaction
+  tags_raw:
   - Transactions
   properties:
   - type: OpenAPI
