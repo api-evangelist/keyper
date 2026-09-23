@@ -1,4 +1,4 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: keyper Access Permissions API
   version: v1
@@ -74,6 +74,47 @@ paths:
       - keyperAuth: []
 components:
   schemas:
+    ActionMessage:
+      type: object
+      required:
+      - message
+      properties:
+        message:
+          type: string
+        detail:
+          type: string
+    PermissionResponseModel:
+      type: object
+      required:
+      - last_available_id
+      properties:
+        permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Permission'
+        last_available_id:
+          type: number
+          description: Highest available permission ID; used for pagination.
+    ErrorResponse:
+      type: object
+      description: keyper error envelope.
+      properties:
+        error_number:
+          type: string
+          description: Specific error number raised (single-item calls).
+        error_message:
+          type: string
+          description: Error message (single item) or info message (list calls).
+        errors:
+          type: array
+          description: Per-list-item errors raised after input validation.
+          items:
+            $ref: '#/components/schemas/ErrorListItem'
+        field_errors:
+          type: array
+          description: Errors rendered while parsing input.
+          items:
+            type: object
     Permission:
       type: object
       required:
@@ -97,63 +138,6 @@ components:
           $ref: '#/components/schemas/ActionMessage'
         metadata:
           $ref: '#/components/schemas/Metadata'
-    ErrorResponse:
-      type: object
-      description: keyper error envelope.
-      properties:
-        error_number:
-          type: string
-          description: Specific error number raised (single-item calls).
-        error_message:
-          type: string
-          description: Error message (single item) or info message (list calls).
-        errors:
-          type: array
-          description: Per-list-item errors raised after input validation.
-          items:
-            $ref: '#/components/schemas/ErrorListItem'
-        field_errors:
-          type: array
-          description: Errors rendered while parsing input.
-          items:
-            type: object
-    ActionMessage:
-      type: object
-      required:
-      - message
-      properties:
-        message:
-          type: string
-        detail:
-          type: string
-    PermissionResponseModel:
-      type: object
-      required:
-      - last_available_id
-      properties:
-        permissions:
-          type: array
-          items:
-            $ref: '#/components/schemas/Permission'
-        last_available_id:
-          type: number
-          description: Highest available permission ID; used for pagination.
-    ErrorListItem:
-      type: object
-      properties:
-        error_index:
-          type: string
-          description: Index of the list item that caused the error.
-        error_number:
-          type: string
-        error_message:
-          type: string
-    PermissionActionEnum:
-      type: string
-      enum:
-      - Grant
-      - Block
-      description: Action the access control system should perform.
     Metadata:
       type: object
       description: Additional ticket data about the permission.
@@ -170,6 +154,35 @@ components:
           type: string
         reduction:
           type: string
+    PermissionActionEnum:
+      type: string
+      enum:
+      - Grant
+      - Block
+      description: Action the access control system should perform.
+    ErrorListItem:
+      type: object
+      properties:
+        error_index:
+          type: string
+          description: Index of the list item that caused the error.
+        error_number:
+          type: string
+        error_message:
+          type: string
+  responses:
+    Unauthorized:
+      description: The app_secret / auth_token is invalid or expired.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    UnprocessableEntity:
+      description: Error while processing data; detailed error information is returned.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
   parameters:
     AcceptLanguage:
       name: Accept-Language
@@ -187,19 +200,6 @@ components:
       schema:
         type: string
         example: '1.0'
-  responses:
-    UnprocessableEntity:
-      description: Error while processing data; detailed error information is returned.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    Unauthorized:
-      description: The app_secret / auth_token is invalid or expired.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
   securitySchemes:
     keyperAuth:
       type: apiKey

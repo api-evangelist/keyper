@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: keyper Access Permissions Transactions API
+  title: keyper Access Transactions API
   version: v1
   description: The keyper Access API lets an Access Control System (ACS) exchange access / entry data with keyper. Send entry transactions for keys (e.g. ticket barcodes) and their permissions (e.g. events), and fetch the permission whitelist / blacklist (Grant / Block) that an ACS should enforce at the gate. Derived faithfully from keyper's published API Blueprint (github.com/keyper/keyper-access-api, apiary.apib).
   contact:
@@ -52,6 +52,18 @@ paths:
       - keyperAuth: []
 components:
   schemas:
+    Gate:
+      type: object
+      required:
+      - id
+      - name
+      properties:
+        id:
+          type: string
+          description: ID of the gate.
+        name:
+          type: string
+          description: Name of the gate.
     Transaction:
       type: object
       required:
@@ -72,6 +84,15 @@ components:
           description: Timestamp of the transaction; defaults to current time.
         gate:
           $ref: '#/components/schemas/Gate'
+    TransactionWarning:
+      type: object
+      properties:
+        key_id:
+          type: string
+        permission_id:
+          type: string
+        message:
+          type: string
     ErrorResponse:
       type: object
       description: keyper error envelope.
@@ -92,11 +113,22 @@ components:
           description: Errors rendered while parsing input.
           items:
             type: object
-    PermissionStateEnum:
-      type: string
-      enum:
-      - Used
-      description: The state of the key's permission.
+    TransactionResponseModel:
+      type: object
+      properties:
+        warnings:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransactionWarning'
+    TransactionRequestModel:
+      type: object
+      required:
+      - transactions
+      properties:
+        transactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Transaction'
     ErrorListItem:
       type: object
       properties:
@@ -107,63 +139,14 @@ components:
           type: string
         error_message:
           type: string
-    TransactionWarning:
-      type: object
-      properties:
-        key_id:
-          type: string
-        permission_id:
-          type: string
-        message:
-          type: string
-    TransactionResponseModel:
-      type: object
-      properties:
-        warnings:
-          type: array
-          items:
-            $ref: '#/components/schemas/TransactionWarning'
-    Gate:
-      type: object
-      required:
-      - id
-      - name
-      properties:
-        id:
-          type: string
-          description: ID of the gate.
-        name:
-          type: string
-          description: Name of the gate.
-    TransactionRequestModel:
-      type: object
-      required:
-      - transactions
-      properties:
-        transactions:
-          type: array
-          items:
-            $ref: '#/components/schemas/Transaction'
-  parameters:
-    AcceptLanguage:
-      name: Accept-Language
-      in: header
-      required: false
-      description: Optional language preference list; defaults to English.
-      schema:
-        type: string
-        example: de, en-gb;q=0.8, en;q=0.7
-    XAppVersion:
-      name: X-App-Version
-      in: header
-      required: false
-      description: Optional version of the app the user is using.
-      schema:
-        type: string
-        example: '1.0'
+    PermissionStateEnum:
+      type: string
+      enum:
+      - Used
+      description: The state of the key's permission.
   responses:
-    UnprocessableEntity:
-      description: Error while processing data; detailed error information is returned.
+    Conflict:
+      description: A resource conflict occurred while processing.
       content:
         application/json:
           schema:
@@ -174,12 +157,29 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    Conflict:
-      description: A resource conflict occurred while processing.
+    UnprocessableEntity:
+      description: Error while processing data; detailed error information is returned.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
+  parameters:
+    XAppVersion:
+      name: X-App-Version
+      in: header
+      required: false
+      description: Optional version of the app the user is using.
+      schema:
+        type: string
+        example: '1.0'
+    AcceptLanguage:
+      name: Accept-Language
+      in: header
+      required: false
+      description: Optional language preference list; defaults to English.
+      schema:
+        type: string
+        example: de, en-gb;q=0.8, en;q=0.7
   securitySchemes:
     keyperAuth:
       type: apiKey

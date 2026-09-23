@@ -1,8 +1,7 @@
 {
   "provider": "keyper",
   "sources": [
-    "keyper-permissions-api-openapi.yml",
-    "keyper-transactions-api-openapi.yml"
+    "_original/keyper-access-openapi.yml"
   ],
   "outputs": [
     "keyper-permissions-api-openapi.yml",
@@ -11,6 +10,13 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "keyper-access-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "keyper-permissions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "keyper-transactions-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
