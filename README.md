@@ -64,6 +64,112 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Keyper is a company surfaced as a portfolio company of speedinvest and added to the API Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+keyper is an Austrian technology company providing connected ticketing and digital access solutions. Its developer platform lets ticketing systems, resellers and access control systems (ACS) deliver e-tickets and exchange access data through the keyper Access API, Connect Provider / Reseller APIs, Ticket Delivery API, native Android and iOS SDKs, and embeddable web components (seatmaps and checkout). The Access API sends entry transactions for keys (ticket barcodes) and their permissions (events), and returns the Grant / Block permission whitelist an access control system enforces at the gate. keyper serves sports, arts and culture organisations across Austria and Central Europe and is backed by Speedinvest.
 
-Backed by: speedinvest
+**Areas:** Company · Ticketing · Access Control · Event · Developer Platform · SDK · Sports · Arts and Culture · Austria
+
+## Keyper on APIs.io
+
+Everything profiled for Keyper is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/keyper/](https://apis.io/providers/keyper/)** — or go straight to one of the APIs or properties below.
+
+### APIs (2)
+
+- [Keyper Permissions API](https://apis.io/apis/keyper/keyper-permissions-api/) — Retrieve the permission whitelist / blacklist for an Access Control System.
+- [Keyper Transactions API](https://apis.io/apis/keyper/keyper-transactions-api/) — Send access / entry transactions to keyper.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [keyper-access](https://apis.io/servers/keyper/keyper-access/)
+
+#### Collections (2)
+
+Postman and Open Collection request collections.
+
+- [keyper Access Permissions API](https://apis.io/collections/keyper/open-keyper-permissions-api/)
+- [keyper Access Permissions Transactions API](https://apis.io/collections/keyper/open-keyper-transactions-api/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Keyper Access Overlay](https://apis.io/overlays/keyper/keyper-access-overlay/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Keyper Authentication](https://apis.io/security/keyper/keyper-authentication/)
+- [Keyper Domain Security](https://apis.io/security/keyper/keyper-domain-security/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.keyper.com)
+- [Documentation](https://developers.keyper.com)
+- [Getting started](https://developers.keyper.com)
+- [API reference](https://developers.keyper.com)
+- [Support](https://support.keyper.com/developers/)
+- [Blog](https://www.keyper.com/news/)
+- [Terms of service](https://www.keyper.com/terms-and-conditions/)
+- [Privacy policy](https://www.keyper.com/privacy-policy/)
+- [GitHub](https://github.com/keyper)
+
+## API Evangelist rating
+
+**Kin Score 32.7** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 73.2 |
+| Contract quality | 14.5 |
+| Contract governance | 4.5 |
+| Operational transparency | 2.6 |
+| Developer ergonomics | 73.2 |
+| Access clarity | 27.6 |
+
+**Agent readiness 19.2** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | — |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 24.5** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/keyper/](https://apis.io/providers/keyper/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Keyper: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/keyper/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
